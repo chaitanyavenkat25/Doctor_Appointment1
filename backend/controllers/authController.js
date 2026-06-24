@@ -55,12 +55,15 @@ exports.login = async (req, res) => {
       throw new Error("not found");
     }
 
-    if (!account || !(await account.matchPassword(password)))
+    if (!account || !(await account.matchPassword(password))){
       throw new Error("Invalid credentials");
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
+      // return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
 
-    if (!account.isActive)
-      return res.status(403).json({ success: false, message: "Account deactivated" });
+    if (!account.isActive){
+      throw new Error("Account deactivated");
+      // return res.status(403).json({ success: false, message: "Account deactivated" });
+    }
 
     res.json({
       success: true,
