@@ -14,6 +14,9 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
+app.get("/", (req, res) => {
+  res.send("Welcome to the Doctor Appointment Booking API");
+});
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/doctors", require("./routes/doctorRoutes"));
@@ -23,7 +26,7 @@ app.use("/api/reviews", require("./routes/reviewRoutes"));
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error("error",err);
   const status = err.statusCode || 500;
   res.status(status).json({ success: false, message: err.message || "Server Error" });
 });
